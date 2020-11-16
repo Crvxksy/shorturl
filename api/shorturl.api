@@ -1,0 +1,55 @@
+info(
+	title: // TODO: add title
+	desc: // TODO: add description
+	author: ""
+	email: ""
+)
+
+type (
+	expandReq struct {
+		shorten string `form:"shorten"`
+	}
+
+	expandResp struct {
+		url string `json:"url"`
+	}
+)
+
+type (
+	shortenReq struct {
+		url string `form:"url"`
+	}
+
+	shortenResp struct {
+		shorten string `json:"shorten"`
+	}
+)
+
+type JwtTokenRequest struct {
+}
+
+type JwtTokenResponse struct {
+	AccessToken  string `json:"access_token"`
+	AccessExpire int64  `json:"access_expire"`
+	RefreshAfter int64  `json:"refresh_after"` // 建议客户端刷新token的绝对时间
+}
+
+service shorturl-api {
+  @handler JwtHandler
+  post /user/token(JwtTokenRequest) returns (JwtTokenResponse)
+}
+@server(
+	jwt: JwtAuth
+)
+service shorturl-api {
+  @handler ShortenHandler
+  get /shorten(shortenReq) returns(shortenResp)
+}
+
+service shorturl-api {
+  @server(
+    handler: ExpandHandler
+  )
+  get /expand(expandReq) returns(expandResp)
+}
+

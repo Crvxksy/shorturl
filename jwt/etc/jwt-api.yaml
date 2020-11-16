@@ -1,0 +1,6 @@
+Name: jwt-api
+Host: 0.0.0.0
+Port: 8888
+JwtAuth:
+  AccessSecret: ivory$secret
+  AccessExpire: 604800

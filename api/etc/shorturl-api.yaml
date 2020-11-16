@@ -1,0 +1,16 @@
+Name: shorturl-api
+Host: 0.0.0.0
+Port: 8888
+JwtAuth:
+  AccessSecret: ivory$secret
+  AccessExpire: 604800
+  RefreshAfter: 0
+Transform:
+  Etcd:
+    Hosts:
+    - 127.0.0.1:2379
+    Key: transform.rpc
+Prometheus:
+  Host: 127.0.0.1
+  Port: 9091
+  Path: /metrics
